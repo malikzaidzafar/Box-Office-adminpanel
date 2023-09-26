@@ -1,8 +1,7 @@
 import axios from 'axios'
 //Purpose: function  for setUp api calling structure
 const api = axios.create({
-  baseURL: 'https://www.salesmind.work/',
-  // baseURL: 'https://sales-mind-app-test.herokuapp.com/',
+  baseURL: 'http://localhost:3050/',
   responseType: 'json',
   headers: {
     'Content-Type': 'application/json',

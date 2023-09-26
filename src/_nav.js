@@ -16,18 +16,18 @@ const _nav = [
   },
   {
     component: CNavGroup,
-    name: 'Boosts',
+    name: 'Movies',
     icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Add Boost',
-        to: '/add-boost',
+        name: 'Add Movies',
+        to: '/add-movies',
       },
       {
         component: CNavItem,
-        name: 'All Boosts',
-        to: '/all-boosts',
+        name: 'All Movies',
+        to: '/all-movies',
       },
     ],
   },
