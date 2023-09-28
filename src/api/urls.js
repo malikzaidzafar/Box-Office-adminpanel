@@ -1,8 +1,8 @@
 export const urls = {
-  addBoost: 'addBoost',
-  allBoosts: 'getAllBoosts',
-  deleteBoost: 'deleteBoost',
-  editBoost: 'updateBoost',
+  addMovie: 'addMovie',
+  getAllMovies: 'getAllBoxOfficeMovies',
+  deleteMovie: 'deleteMovie',
+  editMovie: 'updateMovie',
   getAllUsers: 'getAllUsers',
   getAllGoalsImages: 'getAllGoalsImages',
   deleteGoalImage: 'DeleteGoalImage',

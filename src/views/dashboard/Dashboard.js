@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-
 import {
   CCardHeader,
   CCol,
@@ -11,9 +10,12 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CImage,
 } from '@coreui/react'
 import { api } from 'src/api'
 import { urls } from 'src/api/urls'
+import CIcon from '@coreui/icons-react'
+import { cilPen, cilTrash } from '@coreui/icons'
 
 const Dashboard = () => {
   const [allUsers, setAllUsers] = useState([])
@@ -26,7 +28,7 @@ const Dashboard = () => {
     setLoading(true)
     try {
       const res = await api.get(urls.getAllUsers)
-      if (res.status == 200) {
+      if (res.status === 200) {
         setAllUsers(res.data?.allUsers)
       }
     } catch (error) {
@@ -59,8 +61,11 @@ const Dashboard = () => {
               <CTableRow>
                 <CTableHeaderCell>Full Name</CTableHeaderCell>
                 <CTableHeaderCell>Email</CTableHeaderCell>
+                <CTableHeaderCell>Profile picture</CTableHeaderCell>
+                <CTableHeaderCell>Cover picture</CTableHeaderCell>
                 <CTableHeaderCell>Is Active</CTableHeaderCell>
                 <CTableHeaderCell>OTP</CTableHeaderCell>
+                <CTableHeaderCell>Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -73,10 +78,47 @@ const Dashboard = () => {
                     <div>{user?.email}</div>
                   </CTableDataCell>
                   <CTableDataCell>
+                    <div>
+                      <CImage
+                        src={
+                          user?.userInfo?.avatarUrl ? user?.userInfo?.avatarUrl : '/profile.jfif'
+                        }
+                        height={100}
+                        width={100}
+                      />
+                    </div>
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    <div>
+                      <CImage
+                        src={
+                          user?.userInfo?.coverImgUrl
+                            ? user?.userInfo?.coverImgUrl
+                            : '/profile.jfif'
+                        }
+                        height={100}
+                        width={100}
+                      />
+                    </div>
+                  </CTableDataCell>
+                  <CTableDataCell>
                     <div>{user?.isActive ? 'True' : 'False'}</div>
                   </CTableDataCell>
                   <CTableDataCell>
                     <div>{user?.otp}</div>
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    <CIcon
+                      // onClick={() => handleDeleteMovie(item?._id)}
+                      icon={cilTrash}
+                      color="red"
+                    />
+                    <CIcon
+                      style={{ marginLeft: 20 }}
+                      // onClick={() => handleModalVisible(item)}
+                      icon={cilPen}
+                      color="red"
+                    />
                   </CTableDataCell>
                 </CTableRow>
               ))}

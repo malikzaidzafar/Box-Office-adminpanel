@@ -1,11 +1,11 @@
 import React from 'react'
-import AllBoost from './views/boost/AllBoost'
+import AllMovies from './views/movies/AllMovies'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Formats = React.lazy(() => import('./views/inspiration/Formats'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
-const AddBoost = React.lazy(() => import('./views/boost/AddBoost'))
+const AddMovies = React.lazy(() => import('./views/movies/AddMovies'))
 const AddGoalImage = React.lazy(() => import('./views/visualize/AddGoalImage'))
 const Titles = React.lazy(() => import('./views/inspiration/Titles'))
 const AddInspiration = React.lazy(() => import('./views/inspiration/AddInspiration'))
@@ -59,14 +59,14 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
-  { path: '/add-boost', name: 'Add Boost', element: AddBoost },
+  { path: '/add-movies', name: 'Add Boost', element: AddMovies },
   { path: '/goal-images', name: 'Add Goal Image', element: AddGoalImage },
   { path: '/titles', name: 'Titles', element: Titles },
   { path: '/formats', name: 'Formats', element: Formats },
   { path: '/add-inspiration', name: 'Formats', element: AddInspiration },
   { path: '/all-inspirations', name: 'Formats', element: AllInspirations },
   { path: '/users', name: 'Dashboard', element: Dashboard },
-  { path: '/all-boosts', name: 'Dashboard', element: AllBoost },
+  { path: '/all-movies', name: 'Dashboard', element: AllMovies },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/typography', name: 'Typography', element: Typography },
