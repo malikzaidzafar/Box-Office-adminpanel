@@ -1,5 +1,5 @@
-import React, { Component, Suspense, useEffect } from 'react'
-import { HashRouter, Route, Routes, useNavigate } from 'react-router-dom'
+import React, { Suspense } from 'react'
+import { HashRouter, Route, Routes } from 'react-router-dom'
 import './scss/style.scss'
 
 const loading = (
