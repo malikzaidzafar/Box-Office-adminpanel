@@ -1,5 +1,5 @@
 import React from 'react'
-import { cilNotes, cilPuzzle } from '@coreui/icons'
+import { cilNotes } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import { CNavGroup, CNavItem } from '@coreui/react'
 
@@ -8,11 +8,6 @@ const _nav = [
     component: CNavItem,
     name: 'Users',
     to: '/users',
-  },
-  {
-    component: CNavItem,
-    name: 'Goal Images',
-    to: '/goal-images',
   },
   {
     component: CNavGroup,
@@ -28,33 +23,6 @@ const _nav = [
         component: CNavItem,
         name: 'All Movies',
         to: '/all-movies',
-      },
-    ],
-  },
-  {
-    component: CNavGroup,
-    name: 'Inspiration',
-    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Sort Titles',
-        to: '/titles',
-      },
-      {
-        component: CNavItem,
-        name: 'Format',
-        to: '/formats',
-      },
-      {
-        component: CNavItem,
-        name: 'Add Inspiration',
-        to: '/add-inspiration',
-      },
-      {
-        component: CNavItem,
-        name: 'All Inspirations',
-        to: '/all-inspirations',
       },
     ],
   },

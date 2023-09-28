@@ -5,13 +5,13 @@ import { urls } from 'src/api/urls'
 
 const AddMovies = () => {
   const [values, setValues] = useState({
-    title: ``,
-    description: ``,
-    startFrom: ``,
-    endTo: ``,
-    movieThumbnail: ``,
-    releaseDate: ``,
-    grossRevenue: ``,
+    title: '',
+    description: '',
+    startFrom: '',
+    endTo: '',
+    movieThumbnail: '',
+    releaseDate: '',
+    grossRevenue: '',
   })
 
   const [loading, setLoading] = useState(false)
@@ -36,13 +36,13 @@ const AddMovies = () => {
       if (res.status === 200) {
         alert('Movie details successfully saved')
         setValues({
-          title: ``,
-          description: ``,
-          startFrom: ``,
-          endTo: ``,
-          movieThumbnail: ``,
-          releaseDate: ``,
-          grossRevenue: ``,
+          title: '',
+          description: '',
+          startFrom: '',
+          endTo: '',
+          movieThumbnail: '',
+          releaseDate: '',
+          grossRevenue: '',
         })
       } else {
         alert(res.data.error)
@@ -69,7 +69,7 @@ const AddMovies = () => {
       {renderSpinnerOverlay()}
       <CForm onSubmit={handleAddBoost}>
         <div className="mb-3">
-          <CFormLabel htmlFor="exampleFormControlInput2">Enter Title of Movie</CFormLabel>
+          <CFormLabel htmlFor="exampleFormControlInput2">Title of Movie*</CFormLabel>
           <CFormInput
             onChange={({ target: { value } }) => {
               setError(false)
@@ -79,11 +79,11 @@ const AddMovies = () => {
             name="boostText"
             required
             id="exampleFormControlInput2"
-            placeholder="Enter title of Movie"
+            placeholder="Enter Title of Movie"
           />
         </div>
         <div className="mb-3">
-          <CFormLabel htmlFor="exampleFormControlInput2">Enter Description</CFormLabel>
+          <CFormLabel htmlFor="exampleFormControlInput2">Description*</CFormLabel>
           <CFormInput
             onChange={({ target: { value } }) => {
               setError(false)
@@ -93,11 +93,11 @@ const AddMovies = () => {
             name="description"
             required
             id="exampleFormControlInp"
-            placeholder="Enter Description"
+            placeholder="Enter Description of Movie"
           />
         </div>
         <div className="mb-3">
-          <CFormLabel htmlFor="exampleFormControlInput2">Enter week Start Date</CFormLabel>
+          <CFormLabel htmlFor="exampleFormControlInput2">Enter the Start Date of Week*</CFormLabel>
           <CFormInput
             type="date"
             onChange={({ target: { value } }) => {
@@ -108,11 +108,11 @@ const AddMovies = () => {
             name="description"
             required
             id="exampleFoControlInp"
-            placeholder="Enter week Start date"
+            placeholder="Enter the Start Date of Week"
           />
         </div>
         <div className="mb-3">
-          <CFormLabel htmlFor="exampleFormControlInput2">Enter week End Date</CFormLabel>
+          <CFormLabel htmlFor="exampleFormControlInput2">Enter the End Date of Week*</CFormLabel>
           <CFormInput
             type="date"
             onChange={({ target: { value } }) => {
@@ -123,11 +123,13 @@ const AddMovies = () => {
             name="description"
             required
             id="exampleFoControlInp"
-            placeholder="Enter week end date"
+            placeholder="Enter the End Date of Week"
           />
         </div>
         <div className="mb-3">
-          <CFormLabel htmlFor="exampleFormControlInput2">Enter movie Release Date</CFormLabel>
+          <CFormLabel htmlFor="exampleFormControlInput2">
+            Enter the Release Date of Movie*
+          </CFormLabel>
           <CFormInput
             type="date"
             onChange={({ target: { value } }) => {
@@ -138,28 +140,29 @@ const AddMovies = () => {
             value={values?.releaseDate?.substring(0, 10)}
             required
             id="exampleFoControlInp"
-            placeholder="Enter movie release date"
+            placeholder="Enter the Release Date of Movie"
           />
         </div>
         <div className="mb-3">
-          <CFormLabel htmlFor="exampleFormControlInput2">Enter Gross Revenue</CFormLabel>
+          <CFormLabel htmlFor="exampleFormControlInput2">Gross Revenue</CFormLabel>
           <CFormInput
             onChange={({ target: { value } }) => {
               setError(false)
               setValues((prev) => ({ ...prev, grossRevenue: !value.startsWith(' ') ? value : '' }))
             }}
             value={values?.grossRevenue}
+            type="Number"
             name="description"
             id="exampleFormControlInp"
-            placeholder="Enter gross revenue"
+            placeholder="Enter the Gross Revenue"
           />
         </div>
         <div className="mb-3">
-          <CFormLabel htmlFor="exampleFormControlInput1">Enter movie Thumbnail</CFormLabel>
+          <CFormLabel htmlFor="exampleFormControlInput1">Movie Thumbnail*</CFormLabel>
           <CFormInput
             name="bgImag"
             id="exampleFormContro"
-            placeholder="Upload movie thumbnail"
+            placeholder="Upload the Movie Thumbnail"
             type="file"
             required
             onChange={(event) => {
