@@ -1,7 +1,8 @@
 import axios from 'axios'
 //Purpose: function  for setUp api calling structure
+const host = process.env.REACT_APP_HOST
 const api = axios.create({
-  baseURL: 'http://localhost:3050/',
+  baseURL: host,
   responseType: 'json',
   headers: {
     'Content-Type': 'application/json',
