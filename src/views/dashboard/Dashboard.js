@@ -31,11 +31,12 @@ const Dashboard = () => {
   const [selectedUserIds, setSelectedUserIds] = useState([])
   const [visible, setVisible] = useState(false)
   const [sendMessage, setSendMessage] = useState({})
+  const [userInfoVisible, setUserInfoVisible] = useState(false)
+  const [userDetails, setUserDetails] = useState({})
   useEffect(() => {
     fetchAllUsers()
   }, [])
 
-  console.log('selectedUserIds: ', selectedUserIds)
   const fetchAllUsers = async () => {
     setLoading(true)
     try {
@@ -151,6 +152,23 @@ const Dashboard = () => {
     setLoading(false)
   }
 
+  const handleUserDetail = async (id) => {
+    setLoading(true)
+    try {
+      const token = localStorage.getItem('token')
+      const res = await api.get(`${urls.getUserProfileById}/${id}`, `Bearer ${token}`)
+      if (res.status === 200) {
+        setUserDetails(res.data.response)
+        setUserInfoVisible(true)
+      } else {
+        alert(res.data.error)
+      }
+    } catch (error) {
+      console.log({ error })
+    }
+    setLoading(false)
+  }
+
   return (
     <>
       {renderSpinnerOverlay()}
@@ -165,9 +183,9 @@ const Dashboard = () => {
                 <CTableHeaderCell>Email</CTableHeaderCell>
                 <CTableHeaderCell>Profile picture</CTableHeaderCell>
                 <CTableHeaderCell>Cover picture</CTableHeaderCell>
-                <CTableHeaderCell>Is Active</CTableHeaderCell>
-                <CTableHeaderCell>OTP</CTableHeaderCell>
-                <CTableHeaderCell>Actions</CTableHeaderCell>
+                <CTableHeaderCell>Is-Active</CTableHeaderCell>
+                <CTableHeaderCell>Activate/Deactivate</CTableHeaderCell>
+                <CTableHeaderCell>View Details</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -180,7 +198,7 @@ const Dashboard = () => {
                 Send Message
               </CButton>
 
-              {allUsers.map((user, index) => (
+              {allUsers?.map((user, index) => (
                 <CTableRow v-for="item in tableItems" key={user?._id}>
                   <CTableDataCell>
                     <input
@@ -190,7 +208,7 @@ const Dashboard = () => {
                     />
                   </CTableDataCell>
                   <CTableDataCell>
-                    <div>{user.firstName}</div>
+                    <div>{user?.firstName}</div>
                   </CTableDataCell>
                   <CTableDataCell>
                     <div>{user?.email}</div>
@@ -243,9 +261,14 @@ const Dashboard = () => {
                     <div>{user?.isActive ? 'True' : 'False'}</div>
                   </CTableDataCell>
                   <CTableDataCell>
-                    <div>{user?.otp}</div>
-                  </CTableDataCell>
-                  <CTableDataCell>
+                    <button disabled={user.isActive} style={{ border: 'none', background: 'none' }}>
+                      <CIcon
+                        style={{ marginLeft: 20 }}
+                        onClick={() => inActiveUser(user?._id, true)}
+                        icon={cilPen}
+                        color="red"
+                      />
+                    </button>
                     <button
                       disabled={!user.isActive}
                       style={{ border: 'none', background: 'none' }}
@@ -256,13 +279,18 @@ const Dashboard = () => {
                         color="red"
                       />
                     </button>
-                    <button disabled={user.isActive} style={{ border: 'none', background: 'none' }}>
-                      <CIcon
-                        style={{ marginLeft: 20 }}
-                        onClick={() => inActiveUser(user?._id, true)}
-                        icon={cilPen}
-                        color="red"
-                      />
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    <button
+                      onClick={() => handleUserDetail(user?._id)}
+                      style={{
+                        border: 'none',
+                        background: 'none',
+                        textDecoration: 'underLine',
+                        color: 'blue',
+                      }}
+                    >
+                      View
                     </button>
                   </CTableDataCell>
                 </CTableRow>
@@ -303,6 +331,38 @@ const Dashboard = () => {
 
             <CButton color="primary" type="submit" disabled={loading}>
               Send Message{' '}
+            </CButton>
+          </CModalFooter>
+        </CForm>
+      </CModal>
+      <CModal visible={userInfoVisible} onClose={() => setUserInfoVisible(false)}>
+        <CModalHeader>
+          <CModalTitle>User Deatils</CModalTitle>
+        </CModalHeader>
+        <CForm>
+          <div className="m-3">
+            <CTable>
+              <CTableHead>
+                <CTableHeaderCell> Total Trophies </CTableHeaderCell>
+                <CTableDataCell>
+                  {userDetails?.silverTrophies +
+                    userDetails?.goldenTrophies +
+                    userDetails?.bronzeTrophies}
+                </CTableDataCell>
+              </CTableHead>
+              <CTableHead>
+                <CTableHeaderCell> Earn Badges </CTableHeaderCell>
+                <CTableDataCell>{userDetails?.badges?.length}</CTableDataCell>
+              </CTableHead>
+              <CTableHead>
+                <CTableHeaderCell> Highest Rank </CTableHeaderCell>
+                <CTableDataCell>{userDetails?.highestRank}</CTableDataCell>
+              </CTableHead>
+            </CTable>
+          </div>
+          <CModalFooter>
+            <CButton color="secondary" onClick={() => setUserInfoVisible(false)}>
+              Close
             </CButton>
           </CModalFooter>
         </CForm>

@@ -1,13 +1,25 @@
 import React from 'react'
-import { cilNotes } from '@coreui/icons'
+import { cilNotes, cilSoccer, cilUser } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import { CNavGroup, CNavItem } from '@coreui/react'
 
 const _nav = [
   {
-    component: CNavItem,
+    component: CNavGroup,
     name: 'Users',
-    to: '/users',
+    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'User Information',
+        to: '/users',
+      },
+      {
+        component: CNavItem,
+        name: 'Users Message',
+        to: '/user-message',
+      },
+    ],
   },
   {
     component: CNavGroup,
@@ -23,6 +35,28 @@ const _nav = [
         component: CNavItem,
         name: 'All Movies',
         to: '/all-movies',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Leaderboard',
+    icon: <CIcon icon={cilSoccer} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Week',
+        to: '/weekly-score',
+      },
+      {
+        component: CNavItem,
+        name: 'Quarter',
+        to: '/seasonal-score',
+      },
+      {
+        component: CNavItem,
+        name: 'Year',
+        to: '/yearly-score',
       },
     ],
   },
