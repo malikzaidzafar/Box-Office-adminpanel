@@ -67,7 +67,7 @@ const YearlyScore = () => {
               <CTableRow>
                 <CTableHeaderCell>Full Name</CTableHeaderCell>
                 <CTableHeaderCell>User profile</CTableHeaderCell>
-                <CTableHeaderCell>Yaerly Score</CTableHeaderCell>
+                <CTableHeaderCell>Yearly Score</CTableHeaderCell>
                 <CTableHeaderCell>Total Score</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
