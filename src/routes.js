@@ -2,6 +2,10 @@ import React from 'react'
 import AllMovies from './views/movies/AllMovies'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
+const UserMessage = React.lazy(() => import('./views/dashboard/UserMessage'))
+const WeeklyScore = React.lazy(() => import('./views/leaderBoard/WeeklyScore'))
+const SeasonalScore = React.lazy(() => import('./views/leaderBoard/SeasonalScore'))
+const YearlyScore = React.lazy(() => import('./views/leaderBoard/YearlyScore'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 const AddMovies = React.lazy(() => import('./views/movies/AddMovies'))
@@ -56,6 +60,10 @@ const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/add-movies', name: 'Add Boost', element: AddMovies },
   { path: '/users', name: 'Dashboard', element: Dashboard },
+  { path: '/user-message', name: 'Dashboard', element: UserMessage },
+  { path: '/weekly-score', name: 'Dashboard', element: WeeklyScore },
+  { path: '/seasonal-score', name: 'Dashboard', element: SeasonalScore },
+  { path: '/yearly-score', name: 'Dashboard', element: YearlyScore },
   { path: '/all-movies', name: 'Dashboard', element: AllMovies },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
