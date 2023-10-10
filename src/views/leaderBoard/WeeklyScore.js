@@ -137,7 +137,7 @@ const WeeklyScore = () => {
                   </CTableRow>
                 ))
               ) : (
-                <h3 style={{ textAlign: 'center' }}>Not Score Available for this week</h3>
+                <h3 style={{ textAlign: 'center' }}>No score available for this week</h3>
               )}
             </CTableBody>
           </CTable>
