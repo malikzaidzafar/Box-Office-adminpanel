@@ -137,7 +137,7 @@ const SeasonalScore = () => {
                   </CTableRow>
                 ))
               ) : (
-                <h3 style={{ textAlign: 'center' }}>No Score Available for this quarter</h3>
+                <h3 style={{ textAlign: 'center' }}>No score available for this quarter</h3>
               )}
             </CTableBody>
           </CTable>

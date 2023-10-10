@@ -305,7 +305,7 @@ const Dashboard = () => {
         </CModalHeader>
         <CForm onSubmit={handleSendMessage}>
           <div className="m-3">
-            <CFormLabel htmlFor="exampleFormControlInput2">Enter title</CFormLabel>
+            <CFormLabel htmlFor="exampleFormControlInput2">Enter Title</CFormLabel>
             <CFormInput
               required
               value={sendMessage?.title}
@@ -337,7 +337,7 @@ const Dashboard = () => {
       </CModal>
       <CModal visible={userInfoVisible} onClose={() => setUserInfoVisible(false)}>
         <CModalHeader>
-          <CModalTitle>User Deatils</CModalTitle>
+          <CModalTitle>User Details</CModalTitle>
         </CModalHeader>
         <CForm>
           <div className="m-3">

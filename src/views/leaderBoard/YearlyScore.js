@@ -112,7 +112,7 @@ const YearlyScore = () => {
                   </CTableRow>
                 ))
               ) : (
-                <h3 style={{ textAlign: 'center' }}>No Score Available for this year</h3>
+                <h3 style={{ textAlign: 'center' }}>No score available for this year</h3>
               )}
             </CTableBody>
           </CTable>
