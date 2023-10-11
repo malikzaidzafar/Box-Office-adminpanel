@@ -68,7 +68,6 @@ const YearlyScore = () => {
                 <CTableHeaderCell>Full Name</CTableHeaderCell>
                 <CTableHeaderCell>User profile</CTableHeaderCell>
                 <CTableHeaderCell>Yearly Score</CTableHeaderCell>
-                <CTableHeaderCell>Total Score</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -104,10 +103,9 @@ const YearlyScore = () => {
                       </div>
                     </CTableDataCell>
                     <CTableDataCell>
-                      <div>{score?.score}</div>
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      <div>{score?.totalScore}</div>
+                      <div>
+                        {score?.score} / {score?.totalScore}
+                      </div>
                     </CTableDataCell>
                   </CTableRow>
                 ))

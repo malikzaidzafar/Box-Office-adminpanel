@@ -97,7 +97,6 @@ const WeeklyScore = () => {
                 <CTableHeaderCell>Full Name</CTableHeaderCell>
                 <CTableHeaderCell>User profile</CTableHeaderCell>
                 <CTableHeaderCell>Weekly Score</CTableHeaderCell>
-                <CTableHeaderCell>Total Score</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -129,10 +128,9 @@ const WeeklyScore = () => {
                       </div>
                     </CTableDataCell>
                     <CTableDataCell>
-                      <div>{score?.score}</div>
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      <div>{score?.totalScore}</div>
+                      <div>
+                        {score?.score} / {score?.totalScore}
+                      </div>
                     </CTableDataCell>
                   </CTableRow>
                 ))
