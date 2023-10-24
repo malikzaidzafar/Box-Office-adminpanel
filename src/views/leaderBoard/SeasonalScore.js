@@ -31,26 +31,26 @@ const SeasonalScore = () => {
   }
 
   useEffect(() => {
+    const fetchSeasonalScore = async () => {
+      setLoading(true)
+      try {
+        const token = localStorage.getItem('token')
+        const payload = {
+          quarter: selectedQuarter,
+          year: selectedYear,
+        }
+        const res = await api.post(urls.getSeasonalScore, payload, token)
+        if (res.status === 200) {
+          setSeasonalScore(res.data?.response)
+        }
+      } catch (error) {
+        console.log({ error })
+      }
+      setLoading(false)
+    }
+
     fetchSeasonalScore()
   }, [selectedQuarter, selectedYear])
-
-  const fetchSeasonalScore = async () => {
-    setLoading(true)
-    try {
-      const token = localStorage.getItem('token')
-      const payload = {
-        quarter: selectedQuarter,
-        year: selectedYear,
-      }
-      const res = await api.post(urls.getSeasonalScore, payload, token)
-      if (res.status === 200) {
-        setSeasonalScore(res.data?.response)
-      }
-    } catch (error) {
-      console.log({ error })
-    }
-    setLoading(false)
-  }
 
   const renderSpinnerOverlay = () => {
     if (loading) {

@@ -23,25 +23,25 @@ const YearlyScore = () => {
   const [selectedYear, setSelectedYear] = useState(currentYear)
 
   useEffect(() => {
+    const fetchYearlyScore = async () => {
+      setLoading(true)
+      try {
+        const token = localStorage.getItem('token')
+        const payload = {
+          year: selectedYear,
+        }
+        const res = await api.post(urls.getYearlyScore, payload, token)
+        if (res.status === 200) {
+          setWeeklyScore(res.data?.response)
+        }
+      } catch (error) {
+        console.log({ error })
+      }
+      setLoading(false)
+    }
+
     fetchYearlyScore()
   }, [selectedYear])
-
-  const fetchYearlyScore = async () => {
-    setLoading(true)
-    try {
-      const token = localStorage.getItem('token')
-      const payload = {
-        year: selectedYear,
-      }
-      const res = await api.post(urls.getYearlyScore, payload, token)
-      if (res.status === 200) {
-        setWeeklyScore(res.data?.response)
-      }
-    } catch (error) {
-      console.log({ error })
-    }
-    setLoading(false)
-  }
 
   const renderSpinnerOverlay = () => {
     if (loading) {

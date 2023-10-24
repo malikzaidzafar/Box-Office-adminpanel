@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useLayoutEffect } from 'react'
+import React, { Suspense, useLayoutEffect } from 'react'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import { CContainer, CSpinner } from '@coreui/react'
 
@@ -12,7 +12,7 @@ const AppContent = () => {
     if (!token) {
       nav('/login')
     }
-  }, [])
+  }, [token, nav])
 
   return (
     <CContainer lg>
