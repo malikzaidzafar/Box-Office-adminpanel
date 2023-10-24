@@ -12,7 +12,6 @@ import {
   CTableRow,
   CImage,
   CFormInput,
-  CFormLabel,
 } from '@coreui/react'
 import { api } from 'src/api'
 import { urls } from 'src/api/urls'
@@ -46,31 +45,29 @@ const WeeklyScore = () => {
   useEffect(() => {
     getPreviousFridayDate(selectedDate)
     getNextThursdayDate(selectedDate)
-  }, [])
-
-  console.log('seleted Year:', selectedDate)
+  }, [selectedDate])
 
   useEffect(() => {
-    fetchWeeklyScore()
-  }, [selectedDate, startDate, endDate])
-
-  const fetchWeeklyScore = async () => {
-    setLoading(true)
-    try {
-      const token = localStorage.getItem('token')
-      const payload = {
-        startDate: startDate,
-        endDate: endDate,
+    const fetchWeeklyScore = async () => {
+      setLoading(true)
+      try {
+        const token = localStorage.getItem('token')
+        const payload = {
+          startDate: startDate,
+          endDate: endDate,
+        }
+        const res = await api.post(urls.getWeeklyScore, payload, token)
+        if (res.status === 200) {
+          setWeeklyScore(res.data?.response)
+        }
+      } catch (error) {
+        console.log({ error })
       }
-      const res = await api.post(urls.getWeeklyScore, payload, token)
-      if (res.status === 200) {
-        setWeeklyScore(res.data?.response)
-      }
-    } catch (error) {
-      console.log({ error })
+      setLoading(false)
     }
-    setLoading(false)
-  }
+
+    fetchWeeklyScore()
+  }, [startDate, endDate])
 
   const renderSpinnerOverlay = () => {
     if (loading) {
