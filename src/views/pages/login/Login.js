@@ -30,7 +30,7 @@ const Login = () => {
     setLoading(true)
     try {
       const res = await api.post(urls.login, fields)
-      if (res.status == 200) {
+      if (res.status === 200) {
         localStorage.setItem('token', res.data?.accessToken)
         nav('/')
       } else {

@@ -12,7 +12,6 @@ import {
   CTableRow,
   CImage,
   CFormInput,
-  CFormLabel,
 } from '@coreui/react'
 import { api } from 'src/api'
 import { urls } from 'src/api/urls'
@@ -46,31 +45,29 @@ const WeeklyScore = () => {
   useEffect(() => {
     getPreviousFridayDate(selectedDate)
     getNextThursdayDate(selectedDate)
-  }, [])
-
-  console.log('seleted Year:', selectedDate)
+  }, [selectedDate])
 
   useEffect(() => {
-    fetchWeeklyScore()
-  }, [selectedDate, startDate, endDate])
-
-  const fetchWeeklyScore = async () => {
-    setLoading(true)
-    try {
-      const token = localStorage.getItem('token')
-      const payload = {
-        startDate: startDate,
-        endDate: endDate,
+    const fetchWeeklyScore = async () => {
+      setLoading(true)
+      try {
+        const token = localStorage.getItem('token')
+        const payload = {
+          startDate: startDate,
+          endDate: endDate,
+        }
+        const res = await api.post(urls.getWeeklyScore, payload, token)
+        if (res.status === 200) {
+          setWeeklyScore(res.data?.response)
+        }
+      } catch (error) {
+        console.log({ error })
       }
-      const res = await api.post(urls.getWeeklyScore, payload, token)
-      if (res.status === 200) {
-        setWeeklyScore(res.data?.response)
-      }
-    } catch (error) {
-      console.log({ error })
+      setLoading(false)
     }
-    setLoading(false)
-  }
+
+    fetchWeeklyScore()
+  }, [startDate, endDate])
 
   const renderSpinnerOverlay = () => {
     if (loading) {
@@ -97,7 +94,6 @@ const WeeklyScore = () => {
                 <CTableHeaderCell>Full Name</CTableHeaderCell>
                 <CTableHeaderCell>User profile</CTableHeaderCell>
                 <CTableHeaderCell>Weekly Score</CTableHeaderCell>
-                <CTableHeaderCell>Total Score</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -129,10 +125,9 @@ const WeeklyScore = () => {
                       </div>
                     </CTableDataCell>
                     <CTableDataCell>
-                      <div>{score?.score}</div>
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      <div>{score?.totalScore}</div>
+                      <div>
+                        {score?.score} / {score?.totalScore}
+                      </div>
                     </CTableDataCell>
                   </CTableRow>
                 ))
