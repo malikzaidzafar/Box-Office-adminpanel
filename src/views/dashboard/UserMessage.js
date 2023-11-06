@@ -17,6 +17,8 @@ import { urls } from 'src/api/urls'
 const UserMessage = () => {
   const [allUsers, setAllUsers] = useState([])
   const [loading, setLoading] = useState(false)
+  const [nameSortOrder, setNameSortOrder] = useState('desc')
+  const [emailSortOrder, setEmailSortOrder] = useState('desc')
 
   useEffect(() => {
     fetAllUserMessage()
@@ -48,6 +50,33 @@ const UserMessage = () => {
     return null
   }
 
+  const handleSortName = () => {
+    const sorted = [...allUsers]
+    const currentSortOrder = nameSortOrder === 'asc' ? 'desc' : 'asc'
+
+    sorted.sort(
+      (a, b) =>
+        a.userId.firstName.localeCompare(b.userId.firstName) *
+        (currentSortOrder === 'asc' ? 1 : -1),
+    )
+
+    setAllUsers(sorted)
+    setNameSortOrder(currentSortOrder)
+  }
+
+  const handleSortEmail = () => {
+    const sorted = [...allUsers]
+    const currentSortOrder = emailSortOrder === 'asc' ? 'desc' : 'asc'
+
+    sorted.sort(
+      (a, b) =>
+        a.userId.email.localeCompare(b.userId.email) * (currentSortOrder === 'asc' ? 1 : -1),
+    )
+
+    setAllUsers(sorted)
+    setEmailSortOrder(currentSortOrder)
+  }
+
   return (
     <>
       {renderSpinnerOverlay()}
@@ -57,8 +86,12 @@ const UserMessage = () => {
           <CTable align="middle" className="mb-0 border" hover responsive>
             <CTableHead color="light">
               <CTableRow>
-                <CTableHeaderCell>Full Name</CTableHeaderCell>
-                <CTableHeaderCell>Email</CTableHeaderCell>
+                <CTableHeaderCell onClick={handleSortName}>
+                  Full Name {nameSortOrder === 'asc' ? '↑' : '↓'}
+                </CTableHeaderCell>
+                <CTableHeaderCell onClick={handleSortEmail}>
+                  Email {emailSortOrder === 'asc' ? '↑' : '↓'}
+                </CTableHeaderCell>
                 <CTableHeaderCell>User Message</CTableHeaderCell>
               </CTableRow>
             </CTableHead>

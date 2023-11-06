@@ -33,6 +33,8 @@ const Dashboard = () => {
   const [sendMessage, setSendMessage] = useState({})
   const [userInfoVisible, setUserInfoVisible] = useState(false)
   const [userDetails, setUserDetails] = useState({})
+  const [nameSortOrder, setNameSortOrder] = useState('desc')
+  const [emailSortOrder, setEmailSortOrder] = useState('desc')
   useEffect(() => {
     fetchAllUsers()
   }, [])
@@ -161,12 +163,34 @@ const Dashboard = () => {
         setUserDetails(res.data.response)
         setUserInfoVisible(true)
       } else {
-        alert(res.data.error)
+        alert('Your token is expire please login')
       }
     } catch (error) {
       console.log({ error })
     }
     setLoading(false)
+  }
+
+  const handleSortName = () => {
+    const sorted = [...allUsers]
+    const currentSortOrder = nameSortOrder === 'asc' ? 'desc' : 'asc'
+    sorted.sort((a, b) => {
+      return a.firstName.localeCompare(b.firstName) * (currentSortOrder === 'asc' ? 1 : -1)
+    })
+
+    setAllUsers(sorted)
+    setNameSortOrder(currentSortOrder)
+  }
+
+  const handleSortEmail = () => {
+    const sorted = [...allUsers]
+    const currentSortOrder = emailSortOrder === 'asc' ? 'desc' : 'asc'
+    sorted.sort((a, b) => {
+      return a.email.localeCompare(b.email) * (currentSortOrder === 'asc' ? 1 : -1)
+    })
+
+    setAllUsers(sorted)
+    setEmailSortOrder(currentSortOrder)
   }
 
   return (
@@ -179,8 +203,12 @@ const Dashboard = () => {
             <CTableHead color="light">
               <CTableRow>
                 <CTableHeaderCell>Send Message</CTableHeaderCell>
-                <CTableHeaderCell>Full Name</CTableHeaderCell>
-                <CTableHeaderCell>Email</CTableHeaderCell>
+                <CTableHeaderCell onClick={handleSortName}>
+                  Full Name {nameSortOrder === 'asc' ? '↑' : '↓'}
+                </CTableHeaderCell>
+                <CTableHeaderCell onClick={handleSortEmail}>
+                  Email {emailSortOrder === 'asc' ? '↑' : '↓'}
+                </CTableHeaderCell>
                 <CTableHeaderCell>Profile picture</CTableHeaderCell>
                 <CTableHeaderCell>Cover picture</CTableHeaderCell>
                 <CTableHeaderCell>Is-Active</CTableHeaderCell>
