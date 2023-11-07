@@ -50,20 +50,22 @@ const WeeklyScore = () => {
   useEffect(() => {
     const fetchWeeklyScore = async () => {
       setLoading(true)
-      try {
-        const token = localStorage.getItem('token')
-        const payload = {
-          startDate: startDate,
-          endDate: endDate,
+      if (startDate && endDate) {
+        try {
+          const token = localStorage.getItem('token')
+          const payload = {
+            startDate: startDate,
+            endDate: endDate,
+          }
+          const res = await api.post(urls.getWeeklyScore, payload, token)
+          if (res.status === 200) {
+            setWeeklyScore(res.data?.response)
+          } else {
+            alert('Your token is expire please login')
+          }
+        } catch (error) {
+          console.log({ error })
         }
-        const res = await api.post(urls.getWeeklyScore, payload, token)
-        if (res.status === 200) {
-          setWeeklyScore(res.data?.response)
-        } else {
-          alert('Your token is expire please login')
-        }
-      } catch (error) {
-        console.log({ error })
       }
       setLoading(false)
     }
