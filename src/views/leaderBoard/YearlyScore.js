@@ -33,6 +33,8 @@ const YearlyScore = () => {
         const res = await api.post(urls.getYearlyScore, payload, token)
         if (res.status === 200) {
           setWeeklyScore(res.data?.response)
+        } else {
+          alert('Your token is expire please login')
         }
       } catch (error) {
         console.log({ error })

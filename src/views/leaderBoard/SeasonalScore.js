@@ -42,6 +42,8 @@ const SeasonalScore = () => {
         const res = await api.post(urls.getSeasonalScore, payload, token)
         if (res.status === 200) {
           setSeasonalScore(res.data?.response)
+        } else {
+          alert('Your token is expire please login')
         }
       } catch (error) {
         console.log({ error })

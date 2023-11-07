@@ -59,6 +59,8 @@ const WeeklyScore = () => {
         const res = await api.post(urls.getWeeklyScore, payload, token)
         if (res.status === 200) {
           setWeeklyScore(res.data?.response)
+        } else {
+          alert('Your token is expire please login')
         }
       } catch (error) {
         console.log({ error })
