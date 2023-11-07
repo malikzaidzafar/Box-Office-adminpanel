@@ -24,6 +24,7 @@ import { api } from 'src/api'
 import { urls } from 'src/api/urls'
 import CIcon from '@coreui/icons-react'
 import { cilPen, cilTrash } from '@coreui/icons'
+import { useNavigate } from 'react-router-dom'
 
 const AllMovies = () => {
   const [allMovies, setAllMovies] = useState([])
@@ -33,6 +34,10 @@ const AllMovies = () => {
   const [firstNumber, setFirstNumber] = useState(0)
   const [secondNumber, setSecondNumber] = useState(15)
   const [showData, setShowData] = useState([])
+  const [startDateSortOrder, setStartDateSortOrder] = useState('desc')
+  const [endDateSortOrder, setEndDateSortOrder] = useState('desc')
+  const [movieTitleOrder, setMovieTitleOrder] = useState('desc')
+  const navigate = useNavigate()
 
   const handlePrevious = (e) => {
     e.preventDefault()
@@ -133,6 +138,52 @@ const AllMovies = () => {
     return null
   }
 
+  const handleTitleSort = () => {
+    const sorted = [...allMovies]
+    let newSortOrder
+
+    if (movieTitleOrder === 'asc') {
+      newSortOrder = 'desc'
+    } else {
+      newSortOrder = 'asc'
+    }
+
+    sorted.sort((a, b) => {
+      return a.title.localeCompare(b.title) * (newSortOrder === 'asc' ? 1 : -1)
+    })
+
+    setAllMovies(sorted)
+    setMovieTitleOrder(newSortOrder)
+  }
+
+  const handleStartDate = () => {
+    const sorted = [...showData]
+
+    const currentSortOrder = startDateSortOrder === 'asc' ? 'desc' : 'asc'
+
+    sorted.sort((a, b) => {
+      const dateA = new Date(a.startFrom)
+      const dateB = new Date(b.startFrom)
+      return (dateA - dateB) * (currentSortOrder === 'asc' ? 1 : -1)
+    })
+    setShowData(sorted)
+    setStartDateSortOrder(currentSortOrder)
+  }
+
+  const handleEndtDate = () => {
+    const sorted = [...showData]
+
+    const currentSortOrder = endDateSortOrder === 'asc' ? 'desc' : 'asc'
+    sorted.sort((a, b) => {
+      const dateA = new Date(a.endTo)
+      const dateB = new Date(b.endTo)
+      return (dateA - dateB) * (currentSortOrder === 'asc' ? 1 : -1)
+    })
+
+    setShowData(sorted)
+    setEndDateSortOrder(currentSortOrder)
+  }
+
   return (
     <>
       {renderSpinnerOverlay()}
@@ -142,16 +193,29 @@ const AllMovies = () => {
           <CTable align="middle" className="mb-0 border" hover responsive>
             <CTableHead color="light">
               <CTableRow>
-                <CTableHeaderCell>Movie Title</CTableHeaderCell>
+                <CTableHeaderCell onClick={handleTitleSort}>
+                  Movie Title {movieTitleOrder === 'asc' ? '↑' : '↓'}
+                </CTableHeaderCell>
                 <CTableHeaderCell>Image</CTableHeaderCell>
                 <CTableHeaderCell>Week Number</CTableHeaderCell>
-                <CTableHeaderCell>Start Date</CTableHeaderCell>
-                <CTableHeaderCell>End Date</CTableHeaderCell>
+                <CTableHeaderCell onClick={handleStartDate}>
+                  Start Date {startDateSortOrder === 'asc' ? '↑' : '↓'}
+                </CTableHeaderCell>
+                <CTableHeaderCell onClick={handleEndtDate}>
+                  End Date {endDateSortOrder === 'asc' ? '↑' : '↓'}
+                </CTableHeaderCell>
                 <CTableHeaderCell>Gross Revenue</CTableHeaderCell>
                 <CTableHeaderCell>Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
+              <CButton
+                color="primary"
+                onClick={() => navigate('/add-movies')}
+                style={{ margin: '10px' }}
+              >
+                Add New Movie
+              </CButton>
               {showData?.map((item, index) => (
                 <CTableRow v-for="item in tableItems" key={item._id}>
                   <CTableDataCell>
