@@ -92,7 +92,10 @@ const AllMovies = () => {
       }
       formData.append(`startFrom`, modalData?.startFrom?.substring(0, 10))
       formData.append(`endTo`, modalData?.endTo?.substring(0, 10))
-      formData.append(`grossRevenue`, modalData?.grossRevenue)
+      if (modalData.grossRevenue) {
+        const revenue = parseFloat(modalData.grossRevenue) * 1_000_000
+        formData.append('grossRevenue', revenue)
+      }
       setLoading(true)
       const res = await api.put(`${urls.editMovie}/${modalData?._id}`, formData, {
         headers: headers,
@@ -183,6 +186,7 @@ const AllMovies = () => {
     setShowData(sorted)
     setEndDateSortOrder(currentSortOrder)
   }
+  console.log('modalData', modalData)
 
   return (
     <>
@@ -292,6 +296,7 @@ const AllMovies = () => {
             <CFormLabel htmlFor="exampleFormControlInput1"> Movie Image</CFormLabel>
             <CFormInput
               type="file"
+              accept=".png,.jpg,.jpeg"
               onChange={({ target }) =>
                 setModalData((prev) => ({ ...prev, movieThumbnail: target.files[0] }))
               }
@@ -304,6 +309,8 @@ const AllMovies = () => {
               id="exampleFormControlInput1"
               value={modalData?.grossRevenue}
               type="Number"
+              step="0.1"
+              min="0"
               onChange={({ target }) =>
                 setModalData((prev) => ({ ...prev, grossRevenue: target.value }))
               }
@@ -329,7 +336,19 @@ const AllMovies = () => {
               }}
             />
           </div>
-          <CImage align="center" src={modalData?.movieThumbnail} height={150} width={150} />
+          <CImage
+            align="center"
+            src={
+              modalData?.movieThumbnail
+                ? typeof modalData.movieThumbnail === 'string'
+                  ? modalData.movieThumbnail
+                  : URL.createObjectURL(modalData.movieThumbnail)
+                : '/fallback.png'
+            }
+            height={150}
+            width={150}
+          />
+
           <CModalFooter>
             <CButton color="secondary" onClick={() => setVisible(false)}>
               Close

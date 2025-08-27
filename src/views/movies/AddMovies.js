@@ -1,5 +1,5 @@
 import { CButton, CCol, CForm, CFormInput, CFormLabel, CSpinner } from '@coreui/react'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { api } from 'src/api'
 import { urls } from 'src/api/urls'
 
@@ -16,6 +16,7 @@ const AddMovies = () => {
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+  const fileInputRef = useRef(null)
 
   const handleAddBoost = async (event) => {
     event.preventDefault()
@@ -31,8 +32,13 @@ const AddMovies = () => {
       formData.append('endTo', values.endTo)
       formData.append('releaseDate', values.releaseDate)
       formData.append('movieThumbnail', values.movieThumbnail)
-      formData.append('grossRevenue', values.grossRevenue)
-      const res = await api.post(urls.addMovie, formData, { headers: headers })
+
+      if (values.grossRevenue) {
+        const revenue = parseFloat(values.grossRevenue) * 1_000_000
+        formData.append('grossRevenue', revenue)
+      }
+
+      const res = await api.post(urls.addMovie, formData, { headers })
       if (res.status === 200) {
         alert('Movie details successfully saved')
         setValues({
@@ -44,6 +50,9 @@ const AddMovies = () => {
           releaseDate: '',
           grossRevenue: '',
         })
+        if (fileInputRef.current) {
+          fileInputRef.current.value = null
+        }
       } else {
         alert(res.data.error)
       }
@@ -52,6 +61,7 @@ const AddMovies = () => {
     }
     setLoading(false)
   }
+
   const renderSpinnerOverlay = () => {
     if (loading) {
       return (
@@ -144,16 +154,17 @@ const AddMovies = () => {
           />
         </div>
         <div className="mb-3">
-          <CFormLabel htmlFor="exampleFormControlInput2">Gross Revenue</CFormLabel>
+          <CFormLabel htmlFor="grossRevenue">Gross Revenue</CFormLabel>
           <CFormInput
+            type="number"
+            step="0.1"
+            min="0"
             onChange={({ target: { value } }) => {
               setError(false)
-              setValues((prev) => ({ ...prev, grossRevenue: !value.startsWith(' ') ? value : '' }))
+              setValues((prev) => ({ ...prev, grossRevenue: value }))
             }}
             value={values?.grossRevenue}
-            type="Number"
-            name="description"
-            id="exampleFormControlInp"
+            id="grossRevenue"
             placeholder="Enter the Gross Revenue"
           />
         </div>
@@ -164,6 +175,8 @@ const AddMovies = () => {
             id="exampleFormContro"
             placeholder="Upload the Movie Thumbnail"
             type="file"
+            accept=".png,.jpg,.jpeg"
+            ref={fileInputRef}
             required
             onChange={(event) => {
               setError(false)
