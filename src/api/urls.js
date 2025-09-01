@@ -21,4 +21,6 @@ export const urls = {
   updateInspiration: 'updateInspiration',
   addUpdateBoostAudio: 'addUpdateBoostAudio',
   getAllBoostForAdmin: 'getAllBoostForAdmin',
+  updaterevenue: 'setGrossRevenue',
+  getrevenue: 'getMovieRevenue' 
 }

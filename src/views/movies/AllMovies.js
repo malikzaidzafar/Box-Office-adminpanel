@@ -173,6 +173,53 @@ const AllMovies = () => {
     setStartDateSortOrder(currentSortOrder)
   }
 
+  const [revenue, setRevenue] = useState({})
+  const [updatingId, setUpdatingId] = useState(null)
+
+  const updaterevenue_function = async (movieId, grossRevenue) => {
+    try {
+      setUpdatingId(movieId)
+
+      const token = localStorage.getItem("token")
+      const payload = {
+        movieId: movieId,
+        actualRevenue: parseFloat(grossRevenue) * 1_000_000,
+      }
+
+      const res = await api.post(urls.updaterevenue, payload, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+
+      if (res.status === 200) {
+
+        alert("Revenue updated Successfully ✅")
+        console.log(res);
+        await fetchallMovies();
+
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        alert("Your token is expired, please login")
+        localStorage.removeItem("token")
+        navigate("/login")
+      } else {
+        console.log("Error updating revenue:", error)
+        alert("Something went wrong while updating revenue.")
+      }
+    } finally {
+      setUpdatingId(null)
+    }
+  }
+
+  function Convertto_Million(number) {
+    return number / 1_000_000;
+  }
+
+
+
   const handleEndtDate = () => {
     const sorted = [...showData]
 
@@ -187,6 +234,7 @@ const AllMovies = () => {
     setEndDateSortOrder(currentSortOrder)
   }
   console.log('modalData', modalData)
+
 
   return (
     <>
@@ -238,8 +286,44 @@ const AllMovies = () => {
                     <div>{new Date(item?.endTo).toLocaleDateString()}</div>
                   </CTableDataCell>
                   <CTableDataCell>
-                    <div>{item?.grossRevenue}</div>
+                    {item.grossRevenue != null ? (
+                      <p>{Convertto_Million(item.grossRevenue)}M</p>
+                    ) : (
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault()
+                          if (!revenue[item._id] || isNaN(revenue[item._id])) {
+                            alert("Please enter a valid number")
+                            return
+                          }
+                          updaterevenue_function(item._id, revenue[item._id])
+                        }}
+                      >
+                        <input
+                          placeholder="enter gross revenue (in millions)"
+                          className="w-[60%]"
+                          value={revenue[item._id] || ""}
+                          onChange={(e) =>
+                            setRevenue((prev) => ({
+                              ...prev,
+                              [item._id]: e.target.value,
+                            }))
+                          }
+                          disabled={updatingId === item._id}
+                        />
+                        <button
+                          type="submit"
+                          className="w-[25%] btn btn-primary"
+                          disabled={updatingId === item._id}
+                        >
+                          {updatingId === item._id ? "Updating..." : "Submit"}
+                        </button>
+                      </form>
+                    )}
                   </CTableDataCell>
+
+
+
                   <CTableDataCell>
                     <CIcon
                       onClick={() => handleDeleteMovie(item?._id)}
@@ -303,12 +387,15 @@ const AllMovies = () => {
             />
           </div>
           <div className="m-3">
-            <CFormLabel htmlFor="exampleFormControlInput2"> Gross Revenue</CFormLabel>
+            <CFormLabel htmlFor="exampleFormControlInput2"> Gross Revenue (in Millions)</CFormLabel>
             <CFormInput
               name="boostAudio"
               id="exampleFormControlInput1"
-              value={modalData?.grossRevenue}
-              type="Number"
+              value={
+                modalData?.grossRevenue
+                  ? Convertto_Million(modalData.grossRevenue)
+                  : ""
+              } type="Number"
               step="0.1"
               min="0"
               onChange={({ target }) =>
