@@ -195,7 +195,7 @@ const AllMovies = () => {
 
       if (res.status === 200) {
 
-        alert("Revenue updated Successfully ✅")
+        alert("Revenue updated Successfully")
         console.log(res);
         await fetchallMovies();
 
