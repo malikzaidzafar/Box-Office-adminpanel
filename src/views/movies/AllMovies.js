@@ -180,7 +180,7 @@ const AllMovies = () => {
     try {
       setUpdatingId(movieId)
 
-      const token = localStorage.getItem("token")
+      const token = localStorage.getItem('token')
       const payload = {
         movieId: movieId,
         actualRevenue: parseFloat(grossRevenue) * 1_000_000,
@@ -188,26 +188,24 @@ const AllMovies = () => {
 
       const res = await api.post(urls.updaterevenue, payload, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       })
 
       if (res.status === 200) {
-
-        alert("Revenue updated Successfully")
-        console.log(res);
-        await fetchallMovies();
-
+        alert('Revenue updated Successfully')
+        console.log(res)
+        await fetchallMovies()
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        alert("Your token is expired, please login")
-        localStorage.removeItem("token")
-        navigate("/login")
+        alert('Your token is expired, please login')
+        localStorage.removeItem('token')
+        navigate('/login')
       } else {
-        console.log("Error updating revenue:", error)
-        alert("Something went wrong while updating revenue.")
+        console.log('Error updating revenue:', error)
+        alert('Something went wrong while updating revenue.')
       }
     } finally {
       setUpdatingId(null)
@@ -215,10 +213,8 @@ const AllMovies = () => {
   }
 
   function Convertto_Million(number) {
-    return number / 1_000_000;
+    return number / 1_000_000
   }
-
-
 
   const handleEndtDate = () => {
     const sorted = [...showData]
@@ -293,16 +289,17 @@ const AllMovies = () => {
                         onSubmit={(e) => {
                           e.preventDefault()
                           if (!revenue[item._id] || isNaN(revenue[item._id])) {
-                            alert("Please enter a valid number")
+                            alert('Please enter a valid number')
                             return
                           }
                           updaterevenue_function(item._id, revenue[item._id])
                         }}
                       >
+                        <label style={{display : 'block'}}>Enter Rvenue (In Millions) </label>
                         <input
-                          placeholder="enter gross revenue (in millions)"
+                          placeholder="enter here"
                           className="w-[60%]"
-                          value={revenue[item._id] || ""}
+                          value={revenue[item._id] || ''}
                           onChange={(e) =>
                             setRevenue((prev) => ({
                               ...prev,
@@ -316,7 +313,7 @@ const AllMovies = () => {
                           className="w-[25%] btn btn-primary"
                           disabled={updatingId === item._id}
                         >
-                          {updatingId === item._id ? "Updating..." : "Submit"}
+                          {updatingId === item._id ? 'Updating...' : 'Submit'}
                         </button>
                       </form>
                     )}

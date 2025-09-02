@@ -154,7 +154,7 @@ const AddMovies = () => {
           />
         </div>
         <div className="mb-3">
-          <CFormLabel htmlFor="grossRevenue">Gross Revenue</CFormLabel>
+          <CFormLabel htmlFor="grossRevenue">Gross Revenue (in Millions)</CFormLabel>
           <CFormInput
             type="number"
             step="0.1"

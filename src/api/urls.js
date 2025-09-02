@@ -22,5 +22,4 @@ export const urls = {
   addUpdateBoostAudio: 'addUpdateBoostAudio',
   getAllBoostForAdmin: 'getAllBoostForAdmin',
   updaterevenue: 'setGrossRevenue',
-  getrevenue: 'getMovieRevenue' 
 }
