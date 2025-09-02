@@ -390,8 +390,8 @@ const AllMovies = () => {
               id="exampleFormControlInput1"
               value={
                 modalData?.grossRevenue
-                  ? Convertto_Million(modalData.grossRevenue)
-                  : ""
+                  // ? Convertto_Million(modalData.grossRevenue)
+                  
               } type="Number"
               step="0.1"
               min="0"
