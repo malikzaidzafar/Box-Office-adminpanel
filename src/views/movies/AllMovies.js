@@ -295,26 +295,27 @@ const AllMovies = () => {
                           updaterevenue_function(item._id, revenue[item._id])
                         }}
                       >
-                        <label style={{display : 'block'}}>Enter Rvenue (In Millions) </label>
-                        <input
-                          placeholder="enter here"
-                          className="w-[60%]"
-                          value={revenue[item._id] || ''}
-                          onChange={(e) =>
-                            setRevenue((prev) => ({
-                              ...prev,
-                              [item._id]: e.target.value,
-                            }))
-                          }
-                          disabled={updatingId === item._id}
-                        />
-                        <button
-                          type="submit"
-                          className="w-[25%] btn btn-primary"
-                          disabled={updatingId === item._id}
-                        >
-                          {updatingId === item._id ? 'Updating...' : 'Submit'}
-                        </button>
+                        <label style={{ display: 'block' }}>Enter Rvenue (In Millions) </label>
+                        <div className='revenuecustom_modal'>
+                          <input
+                            placeholder="enter here"
+                            type='number'
+                            value={revenue[item._id] || ''}
+                            onChange={(e) =>
+                              setRevenue((prev) => ({
+                                ...prev,
+                                [item._id]: e.target.value,
+                              }))
+                            }
+                            disabled={updatingId === item._id}/>
+                          <button
+                            type="submit"
+                            className="w-[25%] btn btn-primary"
+                            disabled={updatingId === item._id}
+                          >
+                            {updatingId === item._id ? 'Updating...' : 'Submit'}
+                          </button>
+                        </div>
                       </form>
                     )}
                   </CTableDataCell>
@@ -389,10 +390,11 @@ const AllMovies = () => {
               name="boostAudio"
               id="exampleFormControlInput1"
               value={
-                modalData?.grossRevenue
-                  // ? Convertto_Million(modalData.grossRevenue)
-                  
-              } type="Number"
+                modalData?.grossRevenue !== undefined && modalData?.grossRevenue !== null
+                  ? Convertto_Million(modalData.grossRevenue)
+                  : ""
+              }
+              type="number"
               step="0.1"
               min="0"
               onChange={({ target }) =>

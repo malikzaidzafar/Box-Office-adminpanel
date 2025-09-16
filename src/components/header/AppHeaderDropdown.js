@@ -14,7 +14,7 @@ const AppHeaderDropdown = () => {
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
-        <CAvatar src={'https://cvbay.com/wp-content/uploads/2017/03/dummy-image.jpg'} size="md" />
+        <CAvatar src="/profile.jfif" size="md" />
       </CDropdownToggle>
       <CDropdownMenu>
         <CDropdownItem onClick={handleLogout} href="#">
