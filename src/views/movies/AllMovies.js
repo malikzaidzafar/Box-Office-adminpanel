@@ -298,7 +298,7 @@ const AllMovies = () => {
                         <label style={{ display: 'block' }}>Enter Rvenue (In Millions) </label>
                         <div className='revenuecustom_modal'>
                           <input
-                            placeholder="enter here"
+                            placeholder="Enter here"
                             type='number'
                             value={revenue[item._id] || ''}
                             onChange={(e) =>
